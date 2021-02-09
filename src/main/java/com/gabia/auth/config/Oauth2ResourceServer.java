@@ -12,12 +12,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @EnableResourceServer
 public class Oauth2ResourceServer extends ResourceServerConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder noOpPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
-
-    /*@Override
+    @Override
     public void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
@@ -26,5 +21,5 @@ public class Oauth2ResourceServer extends ResourceServerConfigurerAdapter {
                 .and()
                 .requestMatchers()
                 .antMatchers("/api/**");
-    }*/
+    }
 }
