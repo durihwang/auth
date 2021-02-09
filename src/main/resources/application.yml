@@ -1,0 +1,13 @@
+spring:
+  security:
+    user.name: user
+    password: $2a$04$7towbH/KrVyhHq2LJyO/cOxeXkmi0XV/.aDYPs/W0pf3DQliR58Sm
+  datasource:
+    url: jdbc:mysql://localhost/oauth2provider?characterEncoding=UTF-8&serverTimezone=UTC
+    username: oauth2provider
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate: ddl-auto=validate
+  thymeleaf: cache=false
