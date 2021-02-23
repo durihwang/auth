@@ -1,5 +1,6 @@
 package com.gabia.auth.config;
 
+import com.gabia.auth.service.ClientServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,20 +34,16 @@ public class Oauth2AuthorizationServer extends AuthorizationServerConfigurerAdap
         return new JdbcApprovalStore(dataSource);
     }
 
-    /*@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(4);
-    }*/
-
     @Bean
     public ClientRegistrationService clientRegistrationService() {
+
         return new JdbcClientDetailsService(dataSource);
     }
 
-    /*@Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.passwordEncoder(passwordEncoder());
-    }*/
+    @Bean
+    public ClientServiceImpl clientService() {
+        return new ClientServiceImpl(clientRegistrationService());
+    }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {

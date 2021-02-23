@@ -1,77 +1,59 @@
 package com.gabia.auth.controller;
 
-import com.gabia.auth.entity.ClientEntity;
 import com.gabia.auth.dto.BasicClientInfo;
-import com.gabia.auth.dto.ClientType;
-import org.springframework.security.oauth2.provider.ClientRegistrationService;
+import com.gabia.auth.service.ClientService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.UUID;
+import java.util.List;
 
 @RestController
 @RequestMapping("/client")
+@RequiredArgsConstructor
 public class ClientController {
 
-    private final ClientRegistrationService clientRegistrationService;
-
-    public ClientController(ClientRegistrationService clientRegistrationService) {
-        this.clientRegistrationService = clientRegistrationService;
-    }
+    private final ClientService clientService;
 
     @GetMapping("/register")
     public ModelAndView register(ModelAndView mv) {
         mv.setViewName("client/register");
         mv.addObject("registry", new BasicClientInfo());
-
         return mv;
     }
 
     @GetMapping("/dashboard")
-    public ModelAndView dashboard(ModelAndView mv) {
-        mv.addObject("applications",
-                clientRegistrationService.listClientDetails());
+    public ModelAndView dashboard(ModelAndView mv) throws Exception {
+        List<ClientDetails> clientDetails = clientService.find();
+        mv.addObject("applications", clientDetails);
         return mv;
     }
 
     @GetMapping("/remove")
-    public ModelAndView remove(
-            @RequestParam(value = "client_id", required = false) String clientId) {
+    public ModelAndView remove(@RequestParam(value = "client_id", required = false) String clientId) throws Exception {
 
-        clientRegistrationService.removeClientDetails(clientId);
-
+        clientService.remove(clientId);
+        List<ClientDetails> clientDetails = clientService.find();
         ModelAndView mv = new ModelAndView("redirect:/client/dashboard");
-        mv.addObject("applications",
-                clientRegistrationService.listClientDetails());
+        mv.addObject("applications", clientDetails);
         return mv;
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@Validated BasicClientInfo clientDetails,
-                             BindingResult bindingResult) {
+    public ModelAndView save(@Validated BasicClientInfo basicClientInfo, BindingResult bindingResult) throws Exception {
 
         if (bindingResult.hasErrors()) {
             return new ModelAndView("client/register");
         }
 
-        ClientEntity app = new ClientEntity();
-        app.setName(clientDetails.getName());
-        app.addRedirectUri(clientDetails.getRedirectUri());
-        app.setClientType(ClientType.valueOf(clientDetails.getClientType()));
-        app.setClientId(UUID.randomUUID().toString());
-        app.setClientSecret("{noop}"+UUID.randomUUID().toString());
-        app.setAccessTokenValidity(3000);
-        app.addScope("read_profile");
-        app.addScope("read_contacts");
-
-        clientRegistrationService.addClientDetails(app);
+        clientService.save(basicClientInfo);
+        List<ClientDetails> clientDetails = clientService.find();
 
         // create client details in database
         ModelAndView mv = new ModelAndView("redirect:/client/dashboard");
-        mv.addObject("applications",
-                clientRegistrationService.listClientDetails());
+        mv.addObject("applications", clientDetails);
 
         return mv;
     }

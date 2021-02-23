@@ -22,8 +22,9 @@ class AuthApplicationTests {
 
 		mockMvc.perform(
 					post("/oauth/token")
-							.header("Authorization","Basic Nzg4NjFmODQtNmEyMy00ZWRjLWE3ZTktMzdlNzg2YmExYjQ5OjRlNTUxMjk3LWIyODAtNGY5Zi05OWJmLTEyOTFhMmMxNjA1Mg==")
-							.param("grant_type", "client_credentials"))
+					.header("Authorization","Basic Nzg4NjFmODQtNmEyMy00ZWRjLWE3ZTktMzdlNzg2YmExYjQ5OjRlNTUxMjk3LWIyODAtNGY5Zi05OWJmLTEyOTFhMmMxNjA1Mg==")
+					.param("grant_type", "client_credentials")
+				)
 				.andDo(print())
 				.andExpect(status().isOk());
 	}

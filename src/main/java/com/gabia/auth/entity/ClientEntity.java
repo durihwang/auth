@@ -1,61 +1,31 @@
 package com.gabia.auth.entity;
 
 import com.gabia.auth.dto.ClientType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
-
 import java.util.*;
 
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class ClientEntity implements ClientDetails {
 
-    private static final long serialVersionUID = 1L;
-
+    private String name;
     private String clientId;
-
-    private String clientSecret;
-
     private ClientType clientType;
-
-    private Set<String> resourceIds = new HashSet<>();
-
-    private Set<String> scope = new HashSet<>();
-
-    private Set<String> webServerRedirectUri = new HashSet<>();
-
+    private String clientSecret;
+    private String redirectUri;
     private int accessTokenValidity;
-
+    private Set<String> scope = new HashSet<>();
     private Map<String, Object> additionalInformation = new HashMap<>();
-
-    public void setName(String name) {
-        additionalInformation.put("name", name);
-    }
-
-    public void setClientType(ClientType clientType) {
-        additionalInformation.put("client_type", clientType.name());
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public void setClientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
-    }
-
-    public void setAccessTokenValidity(int accessTokenValidity) {
-        this.accessTokenValidity = accessTokenValidity;
-    }
-
-    public void addRedirectUri(String redirectUri) {
-        this.webServerRedirectUri.add(redirectUri);
-    }
+    private Set<String> grantTypes = new HashSet<>();
 
     public void addScope(String scope) {
         this.scope.add(scope);
-    }
-
-    public void addResourceId(String resourceId) {
-        this.resourceIds.add(resourceId);
     }
 
     @Override
@@ -65,12 +35,12 @@ public class ClientEntity implements ClientDetails {
 
     @Override
     public Set<String> getResourceIds() {
-        return Collections.unmodifiableSet(resourceIds);
+        return null;
     }
 
     @Override
     public boolean isSecretRequired() {
-        return clientType == ClientType.CONFIDENTIAL;
+        return false;
     }
 
     @Override
@@ -80,7 +50,7 @@ public class ClientEntity implements ClientDetails {
 
     @Override
     public boolean isScoped() {
-        return scope.size() > 0;
+        return false;
     }
 
     @Override
@@ -90,7 +60,6 @@ public class ClientEntity implements ClientDetails {
 
     @Override
     public Set<String> getAuthorizedGrantTypes() {
-        Set<String> grantTypes = new HashSet<>();
         grantTypes.add("authorization_code");
         grantTypes.add("refresh_token");
         grantTypes.add("client_credentials");
@@ -99,12 +68,12 @@ public class ClientEntity implements ClientDetails {
 
     @Override
     public Set<String> getRegisteredRedirectUri() {
-        return Collections.unmodifiableSet(webServerRedirectUri);
+        return null;
     }
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        return new HashSet<>();
+        return null;
     }
 
     @Override
@@ -124,6 +93,8 @@ public class ClientEntity implements ClientDetails {
 
     @Override
     public Map<String, Object> getAdditionalInformation() {
+        additionalInformation.put("name", getName());
+        additionalInformation.put("client_type", clientType.name());
         return additionalInformation;
     }
 }
