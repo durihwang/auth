@@ -1,12 +1,12 @@
-package com.gabia.auth.client;
+package com.gabia.auth.entity;
 
+import com.gabia.auth.dto.ClientType;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
 import java.util.*;
 
-public class Application implements ClientDetails {
+public class ClientEntity implements ClientDetails {
 
     private static final long serialVersionUID = 1L;
 

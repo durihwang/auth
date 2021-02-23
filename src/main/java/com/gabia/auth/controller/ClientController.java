@@ -1,5 +1,8 @@
-package com.gabia.auth.client;
+package com.gabia.auth.controller;
 
+import com.gabia.auth.entity.ClientEntity;
+import com.gabia.auth.dto.BasicClientInfo;
+import com.gabia.auth.dto.ClientType;
 import org.springframework.security.oauth2.provider.ClientRegistrationService;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -53,7 +56,7 @@ public class ClientController {
             return new ModelAndView("client/register");
         }
 
-        Application app = new Application();
+        ClientEntity app = new ClientEntity();
         app.setName(clientDetails.getName());
         app.addRedirectUri(clientDetails.getRedirectUri());
         app.setClientType(ClientType.valueOf(clientDetails.getClientType()));
