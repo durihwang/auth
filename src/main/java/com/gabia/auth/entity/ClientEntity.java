@@ -2,8 +2,6 @@ package com.gabia.auth.entity;
 
 import com.gabia.auth.dto.ClientType;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -11,7 +9,6 @@ import java.util.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class ClientEntity implements ClientDetails {
 
     private String name;
@@ -45,6 +42,7 @@ public class ClientEntity implements ClientDetails {
 
     @Override
     public String getClientSecret() {
+
         return clientSecret;
     }
 
