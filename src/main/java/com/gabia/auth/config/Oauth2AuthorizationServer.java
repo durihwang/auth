@@ -2,6 +2,7 @@ package com.gabia.auth.config;
 
 import com.gabia.auth.repositories.ClientRepository;
 import com.gabia.auth.repositories.ClientRepositoryImpl;
+import com.gabia.auth.service.ClientService;
 import com.gabia.auth.service.ClientServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -40,15 +41,6 @@ public class Oauth2AuthorizationServer extends AuthorizationServerConfigurerAdap
     public ClientRegistrationService clientRegistrationService() {
 
         return new JdbcClientDetailsService(dataSource);
-    }
-
-    @Bean
-    public ClientRepository clientRepository() {
-        return new ClientRepositoryImpl(clientRegistrationService());
-    }
-    @Bean
-    public ClientServiceImpl clientService() {
-        return new ClientServiceImpl(clientRegistrationService(), clientRepository());
     }
 
     @Override
