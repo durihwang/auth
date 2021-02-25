@@ -1,0 +1,42 @@
+# gradle 빌드
+gradle-build-staging:
+  extends: .gradle-build
+  only:
+    - master
+  tags:
+    - stage
+    - inter
+
+# docker 빌드
+docker-build-staging:
+  extends: .docker-build
+  variables:
+    BUILD_TYPE: ${STAGING}
+    IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}-${STAGING}
+    # GKMS_ROLE_ID: ${PROD_KMS_ROLE_ID}
+    # GKMS_SECRET_ID: ${PROD_KMS_ROLE_SECRET}
+    # GKMS_ENGINE_NAME: ${PROD_KMS_HIWORKS_ENGINE}
+    # GKMS_URL: ${KMS_ENDPOINT}
+  only:
+    - master
+  tags:
+    - stage
+    - inter
+
+# 배포
+deploy-staging:
+  extends: .deploy
+  variables:
+    CLUSTER_TYPE: ${KUBE_CLUSTER_STAG}
+    BUILD_TYPE: ${STAGING}
+    IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}-${STAGING}
+    HOST_URL: stage-auth-api.gabia.com
+    LB1_IP: ${STAGE_LB_IP_OFFICE}
+    HELM_CHART_NAME: ${HELM_CHART_DEFAULT_NAME}-${STAGING}
+  environment:
+    name: staging
+  only:
+    - master
+  tags:
+    - stage
+    - inter

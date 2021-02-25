@@ -1,0 +1,65 @@
+# gradle 빌드
+gradle-build-feature:
+  extends: .gradle-build
+  only:
+    - /^feature[-/][a-zA-Z-]+$/
+    - /^fix[-/][a-zA-Z-]+$/
+    - /^hotfix[-/][a-zA-Z-]+$/
+  tags:
+    - dev
+    - inter
+
+# docker 빌드
+docker-build-feature:
+  extends: .docker-build
+  variables:
+    BUILD_TYPE: ${DEVELOP}
+    IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}
+    # GKMS_ROLE_ID: ${DEV_KMS_ROLE_ID}
+    # GKMS_SECRET_ID: ${DEV_KMS_ROLE_SECRET}
+    # GKMS_ENGINE_NAME: ${DEV_KMS_HIWORKS_ENGINE}
+    # GKMS_URL: ${KMS_ENDPOINT}
+  only:
+    - /^feature[-/][a-zA-Z-]+$/
+    - /^fix[-/][a-zA-Z-]+$/
+    - /^hotfix[-/][a-zA-Z-]+$/
+  tags:
+    - dev
+    - inter
+
+# 배포
+deploy-feature:
+  extends: .deploy
+  variables:
+    CLUSTER_TYPE: ${KUBE_CLUSTER_DEV}
+    BUILD_TYPE: ${DEVELOP}
+    IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}
+    HOST_URL: ${CI_COMMIT_REF_SLUG}-dev-auth-api.gabia.com
+    LB_IP: ${DEV_LB_IP_OFFICE}
+    HELM_CHART_NAME: ${HELM_CHART_DEFAULT_NAME}-${CI_COMMIT_REF_SLUG}
+  environment:
+    name: ${CI_COMMIT_REF_NAME}
+    on_stop: helm-uninstall-feature
+  only:
+    - /^feature[-/][a-zA-Z-]+$/
+    - /^fix[-/][a-zA-Z-]+$/
+    - /^hotfix[-/][a-zA-Z-]+$/
+  tags:
+    - dev
+    - inter
+
+# feature 헬름 차트 제거
+helm-uninstall-feature:
+  extends: .helm-uninstall
+  variables:
+    GIT_STRATEGY: none
+    CLUSTER_TYPE: ${KUBE_CLUSTER_DEV}
+    HELM_CHART_NAME: ${HELM_CHART_DEFAULT_NAME}-${CI_COMMIT_REF_SLUG}
+  when: manual
+  only:
+    - /^feature[-/][a-zA-Z-]+$/
+    - /^fix[-/][a-zA-Z-]+$/
+    - /^hotfix[-/][a-zA-Z-]+$/
+  tags:
+    - dev
+    - inter

@@ -1,0 +1,45 @@
+# gradle 빌드
+gradle-build-dev:
+  extends: .gradle-build
+  script:
+    - ./gradlew clean build
+  only:
+    - develop
+  tags:
+    - dev
+    - inter
+
+# docker 빌드
+docker-build-dev:
+  extends: .docker-build
+  variables:
+    BUILD_TYPE: ${DEVELOP}
+    IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}-${DEVELOP}
+  #  GKMS_ROLE_ID: ${DEV_KMS_ROLE_ID}
+  #  GKMS_SECRET_ID: ${DEV_KMS_ROLE_SECRET}
+  #  GKMS_ENGINE_NAME: ${DEV_KMS_HIWORKS_ENGINE}
+  #  GKMS_URL: ${KMS_ENDPOINT}
+  only:
+    - develop
+  tags:
+    - dev
+    - inter
+
+# 배포
+deploy-dev:
+  extends: .deploy
+  variables:
+    CLUSTER_TYPE: ${KUBE_CLUSTER_DEV}
+    BUILD_TYPE: ${DEVELOP}
+    IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}-${DEVELOP}
+    HOST_URL: dev-auth-api.gabia.com
+    # LB_IP: ${DEV_LB_IP_OFFICE}
+    LB_IP: 
+    HELM_CHART_NAME: ${HELM_CHART_DEFAULT_NAME}-${DEVELOP}
+  environment:
+    name: ${DEVELOP}
+  only:
+    - develop
+  tags:
+    - dev
+    - inter
