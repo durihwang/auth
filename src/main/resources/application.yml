@@ -15,11 +15,11 @@ spring:
         max-idle: 10
         min-idle: 2
     port: 6379
-    host: 127.0.0.1
+    host: localhost
   thymeleaf: cache=false
 logging:
   level:
     org:
       springframework:
         jdbc:
-          core: TRACE
+          core: DEBUG
