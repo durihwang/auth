@@ -7,7 +7,7 @@ gradle-build-dev:
     - develop
   tags:
     - dev
-    - inter
+    - gabia
 
 # docker 빌드
 docker-build-dev:
@@ -23,7 +23,7 @@ docker-build-dev:
     - develop
   tags:
     - dev
-    - inter
+    - gabia
 
 # 배포
 deploy-dev:
@@ -42,4 +42,4 @@ deploy-dev:
     - develop
   tags:
     - dev
-    - inter
+    - gabia

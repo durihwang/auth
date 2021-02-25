@@ -7,7 +7,7 @@ gradle-build-prod:
     - branches
   tags:
     - prod
-    - inter
+    - gabia
 
 # docker 빌드
 docker-build-prod:
@@ -25,7 +25,7 @@ docker-build-prod:
     - branches
   tags:
     - prod
-    - inter
+    - gabia
 
 # 배포
 deploy-prod:
@@ -46,4 +46,4 @@ deploy-prod:
     - branches
   tags:
     - prod
-    - inter
+    - gabia
