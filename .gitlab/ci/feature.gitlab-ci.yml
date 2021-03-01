@@ -35,7 +35,7 @@ deploy-feature:
     BUILD_TYPE: ${DEVELOP}
     IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}
     HOST_URL: ${CI_COMMIT_REF_SLUG}-dev-auth-api.gabia.com
-    LB_IP: ${DEV_LB_IP_OFFICE}
+    LB_IP: ${DEV_LB_IP}
     HELM_CHART_NAME: ${HELM_CHART_DEFAULT_NAME}-${CI_COMMIT_REF_SLUG}
   environment:
     name: ${CI_COMMIT_REF_NAME}

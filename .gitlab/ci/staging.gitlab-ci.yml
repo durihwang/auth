@@ -31,7 +31,7 @@ deploy-staging:
     BUILD_TYPE: ${STAGING}
     IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}-${STAGING}
     HOST_URL: stage-auth-api.gabia.com
-    LB1_IP: ${STAGE_LB_IP_OFFICE}
+    LB_IP: ${STAGE_LB_IP}
     HELM_CHART_NAME: ${HELM_CHART_DEFAULT_NAME}-${STAGING}
   environment:
     name: staging

@@ -35,7 +35,7 @@ deploy-prod:
     CLUSTER_TYPE: ${KUBE_CLUSTER_PROD}
     IMAGE_TAG: ${CI_COMMIT_TAG}
     HOST_URL: auth-api.gabia.com
-    LB_IP: ${PROD_LB_IP_OFFICE}
+    LB_IP: ${PROD_LB_IP}
     HELM_CHART_NAME: ${HELM_CHART_DEFAULT_NAME}-${PRODUCTION}
   environment:
     name: production

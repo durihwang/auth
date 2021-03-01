@@ -33,8 +33,7 @@ deploy-dev:
     BUILD_TYPE: ${DEVELOP}
     IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}-${DEVELOP}
     HOST_URL: dev-auth-api.gabia.com
-    # LB_IP: ${DEV_LB_IP_OFFICE}
-    LB_IP: "211.47.70.194"
+    LB_IP: ${DEV_LB_IP}
     HELM_CHART_NAME: ${HELM_CHART_DEFAULT_NAME}-${DEVELOP}
   environment:
     name: ${DEVELOP}
