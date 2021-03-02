@@ -1,4 +1,4 @@
 hosts:
   innodb:
     ip: 10.4.101.11
-    hostnames: innodb.dev-gabia.kms.gabia.io
+    hostnames: innodb.auth.dev-gabia.kms.gabia.io
