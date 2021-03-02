@@ -33,13 +33,6 @@ resources:
     cpu: 500m
     memory: 500Mi
 
-readinessProbe:
-  httpGet:
-    path: /health
-    port: 8080
-  initialDelaySeconds: 10
-  periodSeconds: 10
-
 mount:
   timezone:
     name: timezone
