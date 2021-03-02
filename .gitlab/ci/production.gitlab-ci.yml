@@ -15,10 +15,10 @@ docker-build-prod:
   variables:
     BUILD_TYPE: ${PRODUCTION}
     IMAGE_TAG: ${CI_COMMIT_TAG}
-    # GKMS_ROLE_ID: ${PROD_KMS_ROLE_ID}
-    # GKMS_SECRET_ID: ${PROD_KMS_ROLE_SECRET}
-    # GKMS_ENGINE_NAME: ${PROD_KMS_HIWORKS_ENGINE}
-    # GKMS_URL: ${KMS_ENDPOINT}
+    GKMS_ROLE_ID: ${PROD_KMS_ROLE_ID}
+    GKMS_SECRET_ID: ${PROD_KMS_ROLE_SECRET}
+    GKMS_ENGINE_NAME: ${PROD_KMS_ENGINE}
+    GKMS_URL: ${KMS_ENDPOINT}
   only:
     - /^v(\d+).(\d+).(\d+)$/
   except:

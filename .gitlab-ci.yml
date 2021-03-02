@@ -41,17 +41,13 @@ stages:
     DOCKER_TLS_CERTDIR: ""
     IMAGE_REPOSITORY: "repo.gabia.com/gabia/com/auth"
   script:
-    # - |
-    #   /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile \
-    #                    --build-arg BUILD_TYPE=${BUILD_TYPE} \
-    #                    --build-arg GKMS_URL=${GKMS_URL} \
-    #                    --build-arg GKMS_ROLE_ID=${GKMS_ROLE_ID} \
-    #                    --build-arg GKMS_SECRET_ID=${GKMS_SECRET_ID} \
-    #                    --build-arg GKMS_ENGINE_NAME=${GKMS_ENGINE_NAME} \
-    #                    --destination ${IMAGE_REPOSITORY}:${IMAGE_TAG}
     - |
       /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile \
                        --build-arg BUILD_TYPE=${BUILD_TYPE} \
+                       --build-arg GKMS_URL=${GKMS_URL} \
+                       --build-arg GKMS_ROLE_ID=${GKMS_ROLE_ID} \
+                       --build-arg GKMS_SECRET_ID=${GKMS_SECRET_ID} \
+                       --build-arg GKMS_ENGINE_NAME=${GKMS_ENGINE_NAME} \
                        --destination ${IMAGE_REPOSITORY}:${IMAGE_TAG}
 
 # default configuration of deploy
