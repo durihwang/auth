@@ -19,8 +19,6 @@ affinity: {}
 
 ingress:
   enabled: true
-  annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   hosts:
     - auth-api.gabia.com
   path: /
