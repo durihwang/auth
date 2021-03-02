@@ -39,7 +39,7 @@ stages:
   stage: package
   variables:
     DOCKER_TLS_CERTDIR: ""
-    IMAGE_REPOSITORY: "repo.gabia.com/gabia/com/auth"
+    IMAGE_REPOSITORY: "repo.gabia.com/gabia/com/auth-api"
   script:
     - |
       /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile \
