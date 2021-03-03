@@ -3,17 +3,50 @@ package com.gabia.auth.aop;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
 public class OAuth2CacheAop {
 
+    private final CacheManager redisCacheManager;
+
+    public OAuth2CacheAop(CacheManager redisCacheManager) {
+        this.redisCacheManager = redisCacheManager;
+    }
+
     @Around("execution(* org.springframework.security.oauth2.provider.client.JdbcClientDetailsService.loadClientByClientId(..))")
-    public Object testLog(ProceedingJoinPoint pjp) throws Throwable{
-        System.out.println("AOP START!!!!!");
-        Object retVal = pjp.proceed();
-        System.out.println("AOP END!!!!!");
+    public Object loadClientByClientId(ProceedingJoinPoint pjp) throws Throwable {
+
+        return cache(pjp, "client");
+    }
+
+    @Around("execution(* org.springframework.security.oauth2.provider.token.TokenStore.readAccessToken(..))")
+    public Object readAccessToken(ProceedingJoinPoint pjp) throws Throwable {
+
+        return cache(pjp, "token");
+    }
+
+    @Around("execution(* org.springframework.security.oauth2.provider.token.TokenStore.readAuthentication(..))")
+    public Object readAuthentication(ProceedingJoinPoint pjp) throws Throwable {
+
+        return cache(pjp, "auth");
+    }
+
+    private Object cache(ProceedingJoinPoint pjp, String cacheName) throws Throwable {
+        Cache cache = redisCacheManager.getCache("cache."+cacheName);
+        Object client = cache.get(cacheName);
+
+        Object retVal;
+        if (client instanceof Object) {
+            retVal = cache.get(cacheName).get();
+        } else {
+            retVal = pjp.proceed();
+            cache.put(cacheName, retVal);
+        }
+
         return retVal;
     }
 }
