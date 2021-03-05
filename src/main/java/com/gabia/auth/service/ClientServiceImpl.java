@@ -1,11 +1,14 @@
 package com.gabia.auth.service;
 
 import com.gabia.auth.dto.BasicClientInfo;
+import com.gabia.auth.entity.ClientEntity;
 import com.gabia.auth.repositories.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientRegistrationService;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,7 +20,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientDetails> find() throws Exception {
-        return clientRegistrationService.listClientDetails();
+        List<ClientDetails> clientDetails = clientRegistrationService.listClientDetails();
+        return clientDetails;
     }
 
     @Override

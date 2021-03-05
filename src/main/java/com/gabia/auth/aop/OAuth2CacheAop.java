@@ -3,8 +3,10 @@ package com.gabia.auth.aop;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.security.oauth2.client.test.OAuth2ContextConfiguration;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,28 +25,30 @@ public class OAuth2CacheAop {
         return cache(pjp, "client");
     }
 
-    @Around("execution(* org.springframework.security.oauth2.provider.token.TokenStore.readAccessToken(..))")
+    /*@Around("execution(* org.springframework.security.oauth2.provider.token.TokenStore.readAccessToken(..))")
+    @OAuth2ContextConfiguration
     public Object readAccessToken(ProceedingJoinPoint pjp) throws Throwable {
 
         return cache(pjp, "token");
     }
 
-    @Around("execution(* org.springframework.security.oauth2.provider.token.TokenStore.readAuthentication(..))")
+    @Around("execution(* org.springframework.security.oauth2.provider.token.TokenStore.readAuthentication())")
     public Object readAuthentication(ProceedingJoinPoint pjp) throws Throwable {
 
         return cache(pjp, "auth");
-    }
+    }*/
 
-    private Object cache(ProceedingJoinPoint pjp, String cacheName) throws Throwable {
-        Cache cache = redisCacheManager.getCache("cache."+cacheName);
-        Object client = cache.get(cacheName);
+    private Object cache(ProceedingJoinPoint pjp, String name) throws Throwable {
+
+        Cache cache = redisCacheManager.getCache("oauth");
+        Object client = cache.get(name);
 
         Object retVal;
         if (client instanceof Object) {
-            retVal = cache.get(cacheName).get();
+            retVal = cache.get(name).get();
         } else {
             retVal = pjp.proceed();
-            cache.put(cacheName, retVal);
+            cache.put(name, retVal);
         }
 
         return retVal;
