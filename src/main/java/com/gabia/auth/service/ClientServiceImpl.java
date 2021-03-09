@@ -20,8 +20,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientDetails> find() throws Exception {
-        List<ClientDetails> clientDetails = clientRegistrationService.listClientDetails();
-        return clientDetails;
+        return clientRegistrationService.listClientDetails();
     }
 
     @Override

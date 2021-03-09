@@ -26,5 +26,3 @@ logging:
       springframework:
         jdbc:
           core: off
-server:
-  port: 8090
