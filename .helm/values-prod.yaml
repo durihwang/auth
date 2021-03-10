@@ -1,4 +1,8 @@
 replicaCount: 2
 
-
+hosts:
+  innodb:
+    ip: 211.47.78.40
+    hostnames:
+      - mysql.oauth2provider.gabia.kms.gabia.io
 

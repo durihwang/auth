@@ -2,4 +2,4 @@ hosts:
   innodb:
     ip: 10.4.101.11
     hostnames: 
-      - innodb.auth.dev-gabia.kms.gabia.io
+      - mysql.oauth2provider.dev-gabia.kms.gabia.io
