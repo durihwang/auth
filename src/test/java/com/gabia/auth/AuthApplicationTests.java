@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class AuthApplicationTests {
 
-    @Autowired
+    /*@Autowired
     private MockMvc mockMvc;
 
     @Test
@@ -41,5 +41,5 @@ class AuthApplicationTests {
 						.andDo(print())
 						.andExpect(status().isOk()).andReturn();
 		System.out.println("mvcResult = " + mvcResult.getResponse().getContentAsString());
-    }
+    }*/
 }
