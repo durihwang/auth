@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://{{gabia.mysql.hostname}}/oauth2provider?characterEncoding=UTF-8&serverTimezone=UTC
+    username: {{gabia.mysql.username}}
+    password: {{gabia.mysql.password}}
+  cache:
+    type: redis
+  redis:
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 2
+    host: {{gabia.redis.hostname}}
+    port: 5000
+    password: {{gabia.redis.password}}
+  thymeleaf: cache=false
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: off
+hiworks:
+  kms:
+    engine-name: gabia
+    property-map:
+      "[mysql/oauth2provider]":
+        hostname: "gabia.mysql.hostname"
+        password: "gabia.mysql.password"
+        username: "gabia.mysql.username"
+      "[redis/auth]":
+        hostname: "gabia.redis.hostname"
+        password: "gabia.redis.password"
+        port: "gabia.redis.port"

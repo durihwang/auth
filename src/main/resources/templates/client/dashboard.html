@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>oauth2server</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<br/>
+<div class="container">
+
+    <h1>Registered Applications</h1>
+
+    <br>
+
+    <div th:if="${applications != null}">
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+                <td>Application name</td>
+                <td>client type</td>
+                <td>client ID</td>
+                <td>client secret</td>
+                <td>Delete app</td>
+            </tr>
+            <tr th:each="app : ${applications}">
+                <td th:text="${app.additionalInformation['name']}"></td>
+                <td th:text="${app.additionalInformation['client_type']}"></td>
+                <td th:text="${app.clientId}">client_id</td>
+                <td th:text="${#strings.replace(app.clientSecret, '{noop}', '')}">client_secret</td>
+                <td><a class="btn btn-danger" href="#" th:href="@{/client/remove(client_id=${app.clientId})}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <a class="btn btn-primary" href="/client/register">Create</a>
+</div>
+</body>
+</html>
