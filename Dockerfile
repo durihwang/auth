@@ -24,8 +24,8 @@ ENTRYPOINT ["java",\
  "-Xmx256m",\
  "-Dserver.shutdown=graceful",\
  "-Dspring.lifecycle.timeout-per-shutdown-phase=25s",\
- "-Dhiworks.kms.role-id=${KMS_ROLE_ID}",\
- "-Dhiworks.kms.secret-id=${KMS_ROLE_SECRET}",\
- "-Dhiworks.kms.engine-name=${KMS_ENGINE_NAME}",\
+ "-Dhiworks.kms.role-id=${GKMS_ROLE_ID}",\
+ "-Dhiworks.kms.secret-id=${GKMS_SECRET_ID}",\
+ "-Dhiworks.kms.engine-name=${GKMS_ENGINE_NAME}",\
  "-Dspring.profiles.active=${BUILD_TYPE}",\
  "-jar", "/app.jar"]
