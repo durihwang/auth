@@ -21,16 +21,4 @@ logging:
     org:
       springframework:
         jdbc:
-          core: off
-hiworks:
-  kms:
-    engine-name: gabia
-    property-map:
-      "[mysql/oauth2provider]":
-        hostname: "gabia.mysql.hostname"
-        password: "gabia.mysql.password"
-        username: "gabia.mysql.username"
-      "[redis/auth]":
-        hostname: "gabia.redis.hostname"
-        password: "gabia.redis.password"
-        port: "gabia.redis.port"
+          core: debug
