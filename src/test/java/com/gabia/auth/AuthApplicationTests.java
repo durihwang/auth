@@ -19,12 +19,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Profile("test")
+@Profile("local")
 @SpringBootTest(
-        args = {"--spring.profiles.active=test"
+        args = {"--spring.profiles.active=local"
                 , "--hiworks.kms.role-id=a2d67753-929c-14b9-ccac-5b5086141e68"
-                , "--hiworks.kms.secret-id=42a39ca7-fa56-5ec0-f085-71ce90e5d6bd"
-                , "--hiworks.kms.engine-name=gabia"}
+                , "--hiworks.kms.secret-id=6ac38431-3dcf-8fef-75a8-b9e9f5d2ad13"
+                , "--hiworks.kms.engine-name=dev-gabia"}
 )
 @AutoConfigureMockMvc
 class AuthApplicationTests {

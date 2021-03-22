@@ -10,4 +10,3 @@ hiworks:
         hostname: "gabia.redis.hostname"
         password: "gabia.redis.password"
         port: "gabia.redis.port"
-    fail-fast: false
