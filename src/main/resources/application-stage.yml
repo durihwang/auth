@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: stage
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${gabia.mysql.hostname}/oauth2provider?characterEncoding=UTF-8&serverTimezone=UTC
