@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,13 +18,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Profile("local")
 @SpringBootTest(
         args = {"--spring.profiles.active=local"
                 , "--hiworks.kms.role-id=a2d67753-929c-14b9-ccac-5b5086141e68"
                 , "--hiworks.kms.secret-id=42a39ca7-fa56-5ec0-f085-71ce90e5d6bd"
                 , "--hiworks.kms.engine-name=gabia"}
 )
-@ActiveProfiles(profiles = {"local"})
 @AutoConfigureMockMvc
 class AuthApplicationTests {
 
