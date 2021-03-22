@@ -19,15 +19,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Profile("local")
 @SpringBootTest(
-        args = {"--spring.profiles.active=dev"
+        args = {"--spring.profiles.active=local"
                 , "--hiworks.kms.role-id=a2d67753-929c-14b9-ccac-5b5086141e68"
                 , "--hiworks.kms.secret-id=6ac38431-3dcf-8fef-75a8-b9e9f5d2ad13"
                 , "--hiworks.kms.engine-name=dev-gabia"}
 )
+@Profile("local")
 @AutoConfigureMockMvc
 class AuthApplicationTests {
+
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
+
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,9 +42,10 @@ class AuthApplicationTests {
     @Autowired
     ApplicationContext ctx;
 
-    /*@Test
+    @Test
     void 토큰_검증() throws Exception{
 
+        System.out.println("active = " + activeProfile);
         //given
         Base64.Encoder encoder = Base64.getEncoder();
         List<TokenEntity> allBy = tokenRepository.findAllBy();
@@ -58,5 +63,5 @@ class AuthApplicationTests {
                         .andDo(print())
                         .andExpect(status().isOk()).andReturn();
         //then
-    }*/
+    }
 }
