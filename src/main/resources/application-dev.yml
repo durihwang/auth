@@ -4,6 +4,9 @@ spring:
     url: jdbc:mysql://${gabia.mysql.hostname}/oauth2provider?characterEncoding=UTF-8&serverTimezone=UTC
     username: ${gabia.mysql.username}
     password: ${gabia.mysql.password}
+  jpa:
+    hibernate:
+      ddl-auto: update
   cache:
     type: redis
   redis:
