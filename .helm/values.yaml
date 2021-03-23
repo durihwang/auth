@@ -37,7 +37,7 @@ mount:
 readinessProbe:
   httpGet:
     path: /health
-    port: 80
+    port: 8080
   initialDelaySeconds: 10
   periodSeconds: 10 
 
