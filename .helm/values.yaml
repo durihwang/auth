@@ -34,5 +34,12 @@ mount:
     path: /etc/localtime
     type: hostPath
 
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 80
+  initialDelaySeconds: 10
+  periodSeconds: 10 
+
 loadBalancer:
   ips: []
