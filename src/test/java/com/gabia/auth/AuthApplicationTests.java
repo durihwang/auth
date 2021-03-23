@@ -36,7 +36,7 @@ class AuthApplicationTests {
 	private TokenRepository tokenRepository;
 
     @Test
-    void 토큰_검증() throws Exception{
+    void 토큰_검증_성공() throws Exception{
 
         //given
         Base64.Encoder encoder = Base64.getEncoder();
@@ -55,5 +55,17 @@ class AuthApplicationTests {
                         .andDo(print())
                         .andExpect(status().isOk()).andReturn();
         //then
+    }
+
+    @Test
+    void 토큰_검증_실패() throws Exception{
+
+        MvcResult mvcResult =
+                mockMvc.perform(
+                        post("/oauth/token")
+//                                .header("Authorization", "Basic "+Authorization)
+                                .param("grant_type", "client_credentials"))
+                        .andDo(print())
+                        .andExpect(status().isUnauthorized()).andReturn();
     }
 }

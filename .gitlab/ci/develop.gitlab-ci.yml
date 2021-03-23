@@ -2,7 +2,7 @@
 gradle-build-dev:
   extends: .gradle-build
   script:
-    - ./gradlew clean build -i
+    - ./gradlew clean build
   only:
     - develop
   tags:
