@@ -23,6 +23,8 @@ spring:
   thymeleaf: cache=false
 logging:
   level:
+    com:
+      gabia: info
     org:
       springframework:
         jdbc:

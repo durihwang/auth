@@ -1,23 +1,16 @@
 package com.gabia.auth.aop;
 
 import com.gabia.auth.service.CacheService;
-import lombok.val;
-import net.minidev.json.JSONObject;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 import java.util.Optional;
 
 @Component
@@ -27,6 +20,7 @@ public class OAuth2CacheAop {
     private final CacheManager redisCacheManager;
     private final CacheService cacheService;
     private static final int MAX_RETRIES = 4;
+    private final static Logger LOGGER = LoggerFactory.getLogger(OAuth2CacheAop.class);
 
     @Autowired
     public OAuth2CacheAop(CacheManager redisCacheManager, CacheService cacheService) {
@@ -38,12 +32,14 @@ public class OAuth2CacheAop {
     public Object loadClientByClientId(ProceedingJoinPoint pjp) throws Throwable {
 
         Object client = findCache("client");
+
         if (client instanceof Object) {
+            LOGGER.info("Using Cache");
             return client;
         } else {
             Object proceed = pjp.proceed();
             cacheService.save(proceed, "client");
-            System.out.println("no Cache");
+            LOGGER.info("No Cache");
             return proceed;
         }
     }
