@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ public class OAuth2CacheAop {
 
     private final CacheManager redisCacheManager;
     private final CacheService cacheService;
+    private static final int MAX_RETRIES = 4;
 
     @Autowired
     public OAuth2CacheAop(CacheManager redisCacheManager, CacheService cacheService) {
@@ -44,6 +46,20 @@ public class OAuth2CacheAop {
             System.out.println("no Cache");
             return proceed;
         }
+    }
+
+    @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.*(..))")
+    public Object execute (ProceedingJoinPoint pjp) throws Throwable {
+        int tts = 1000;
+        for (int i=0; i<MAX_RETRIES; i++) {
+            try {
+                return pjp.proceed();
+            } catch (DuplicateKeyException e) {
+                Thread.sleep(tts);
+                tts = tts*2;
+            }
+        }
+        throw new IllegalStateException("Could not execute: " + pjp.getSignature().getName());
     }
 
     /*@Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
