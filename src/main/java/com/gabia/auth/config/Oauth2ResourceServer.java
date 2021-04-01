@@ -17,6 +17,6 @@ public class Oauth2ResourceServer extends ResourceServerConfigurerAdapter {
                 .authenticated()
                 .and()
                 .requestMatchers()
-                .antMatchers("/oauth/validation");
+                .antMatchers("/oauth/**");
     }
 }
