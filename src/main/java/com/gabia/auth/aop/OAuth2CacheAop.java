@@ -47,12 +47,12 @@ public class OAuth2CacheAop {
     @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.*(..))")
     public Object execute (ProceedingJoinPoint pjp) throws Throwable {
         int tts = 1000;
-        for (int i=0; i<MAX_RETRIES; i++) {
+        for (int i = 0; i < MAX_RETRIES; i++) {
             try {
                 return pjp.proceed();
             } catch (DuplicateKeyException e) {
                 Thread.sleep(tts);
-                tts = tts*2;
+                tts = tts * 2;
             }
         }
         throw new IllegalStateException("Could not execute: " + pjp.getSignature().getName());
