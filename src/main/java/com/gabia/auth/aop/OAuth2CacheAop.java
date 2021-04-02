@@ -44,7 +44,7 @@ public class OAuth2CacheAop {
         }
     }
 
-    @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.*(..))")
+    /*@Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.*(..))")
     public Object execute (ProceedingJoinPoint pjp) throws Throwable {
         int tts = 1000;
         for (int i = 0; i < MAX_RETRIES; i++) {
@@ -56,7 +56,7 @@ public class OAuth2CacheAop {
             }
         }
         throw new IllegalStateException("Could not execute: " + pjp.getSignature().getName());
-    }
+    }*/
 
     /*@Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
     public Object postAccessToken(ProceedingJoinPoint pjp) throws Throwable {
