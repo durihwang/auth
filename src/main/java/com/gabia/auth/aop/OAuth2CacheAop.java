@@ -47,8 +47,8 @@ public class OAuth2CacheAop {
 
     @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.*(..))")
     @Retryable
-    public void execute(ProceedingJoinPoint pjp) throws Throwable {
-
+    public Object execute(ProceedingJoinPoint pjp) throws Throwable {
+        return pjp.proceed();
     }
 
     /*@Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
