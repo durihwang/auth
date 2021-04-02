@@ -46,7 +46,7 @@ public class OAuth2CacheAop {
     }
 
     @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.*(..))")
-    @Retryable
+    @Retryable(value = DuplicateKeyException.class)
     public Object execute(ProceedingJoinPoint pjp) throws Throwable {
         return pjp.proceed();
     }
