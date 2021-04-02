@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import java.util.Optional;
 
@@ -20,7 +19,7 @@ public class OAuth2CacheAop {
 
     private final CacheManager redisCacheManager;
     private final CacheService cacheService;
-    private static final int MAX_RETRIES = 4;
+    private static final int MAX_RETRIES = 10;
     private final static Logger LOGGER = LoggerFactory.getLogger(OAuth2CacheAop.class);
 
     @Autowired
@@ -46,9 +45,17 @@ public class OAuth2CacheAop {
     }
 
     @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.*(..))")
-    @Retryable(value = DuplicateKeyException.class)
-    public Object execute(ProceedingJoinPoint pjp) throws Throwable {
-        return pjp.proceed();
+    public Object execute (ProceedingJoinPoint pjp) throws Throwable {
+        int tts = 1000;
+        for (int i = 0; i < MAX_RETRIES; i++) {
+            try {
+                return pjp.proceed();
+            } catch (DuplicateKeyException e) {
+                Thread.sleep(tts);
+                tts = tts * 2;
+            }
+        }
+        throw new IllegalStateException("Could not execute: " + pjp.getSignature().getName());
     }
 
     /*@Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
