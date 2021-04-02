@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import java.util.Optional;
 
@@ -45,13 +46,9 @@ public class OAuth2CacheAop {
     }
 
     @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.*(..))")
-    public Object execute(ProceedingJoinPoint pjp) throws Throwable {
-        try {
-            return pjp.proceed();
-        } catch (DuplicateKeyException e) {
-            Object client = findCache("client");
-            return client;
-        }
+    @Retryable
+    public void execute(ProceedingJoinPoint pjp) throws Throwable {
+
     }
 
     /*@Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
