@@ -1,6 +1,8 @@
 # gradle 빌드
 gradle-build-staging:
   extends: .gradle-build
+  script:
+    - ./gradlew clean build -x test
   only:
     - master
   tags:

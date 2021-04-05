@@ -1,6 +1,8 @@
 # gradle 빌드
 gradle-build-prod:
   extends: .gradle-build
+  script:
+    - ./gradlew clean build -x test
   only:
     - /^v(\d+).(\d+).(\d+)$/
   except:
