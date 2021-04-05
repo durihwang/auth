@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: stage
+    active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${gabia.mysql.hostname}/oauth2provider?characterEncoding=UTF-8&serverTimezone=UTC
@@ -23,6 +23,8 @@ spring:
   thymeleaf: cache=false
 logging:
   level:
+    com:
+      gabia: info
     org:
       springframework:
         jdbc:
