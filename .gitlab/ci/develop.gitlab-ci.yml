@@ -1,8 +1,6 @@
 # gradle 빌드
 gradle-build-dev:
   extends: .gradle-build
-  script:
-    - ./gradlew clean build
   only:
     - develop
   tags:
