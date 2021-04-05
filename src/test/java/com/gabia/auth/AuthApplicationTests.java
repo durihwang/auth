@@ -26,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 , "--hiworks.kms.engine-name=dev-gabia"},
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 class AuthApplicationTests {
 
