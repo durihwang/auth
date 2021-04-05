@@ -20,8 +20,8 @@ ENV BUILD_TYPE=${BUILD_TYPE}
 
 ENTRYPOINT ["java",\
  "-server",\
- "-Xms256m",\
- "-Xmx256m",\
+ "-Xms512m",\
+ "-Xmx512m",\
  "-Dserver.shutdown=graceful",\
  "-Dspring.lifecycle.timeout-per-shutdown-phase=25s",\
  "-Dhiworks.kms.role-id=${GKMS_ROLE_ID}",\
