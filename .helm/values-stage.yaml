@@ -1,9 +1,0 @@
-hosts:
-  gabiadb:
-    ip: 211.47.70.76
-    hostnames:
-      - mysql.oauth2provider.gabia.kms.gabia.io
-  redis:
-    ip: 121.254.216.20
-    hostnames:
-      - redis.auth.gabia.kms.gabia.io
